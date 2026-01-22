@@ -40,13 +40,19 @@ class MTFScanner:
         """
         try:
             # Fetch data for all timeframes
+            logger.info(f"Fetching MTF data for {symbol}...")
             mtf_data = self.data_fetcher.fetch_multi_timeframe(symbol)
+            logger.info(f"MTF data keys: {list(mtf_data.keys())}")
 
             # Check if we have data for all timeframes
             for tf_name, df in mtf_data.items():
-                if df is None or df.empty:
-                    logger.warning(f"Missing {tf_name} data for {symbol}")
+                if df is None:
+                    logger.warning(f"Missing {tf_name} data for {symbol} (None)")
                     return None
+                if df.empty:
+                    logger.warning(f"Missing {tf_name} data for {symbol} (empty)")
+                    return None
+                logger.info(f"  {tf_name}: {len(df)} rows")
 
             # Calculate V-Stop signals for each timeframe
             daily_signal = get_vstop_signal(

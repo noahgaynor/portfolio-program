@@ -44,12 +44,37 @@ def load_watchlist(filepath: Path = DATA_DIR / "watchlist.json") -> List[str]:
     Returns:
         List of stock symbols
     """
+    import os
+    logger.info(f"Current working directory: {os.getcwd()}")
+    logger.info(f"DATA_DIR: {DATA_DIR}")
+    logger.info(f"Loading watchlist from: {filepath}")
+    logger.info(f"File exists: {filepath.exists()}")
+
     try:
         with open(filepath, 'r') as f:
             data = json.load(f)
-            return data.get('symbols', [])
+            symbols = data.get('symbols', [])
+            logger.info(f"Loaded {len(symbols)} symbols: {symbols[:5]}{'...' if len(symbols) > 5 else ''}")
+            return symbols
     except FileNotFoundError:
-        logger.warning(f"Watchlist not found at {filepath}, using defaults")
+        logger.error(f"Watchlist NOT FOUND at {filepath}")
+        # Try alternative paths
+        alt_paths = [
+            Path("data/watchlist.json"),
+            Path("./data/watchlist.json"),
+            Path(__file__).parent.parent / "data" / "watchlist.json"
+        ]
+        for alt in alt_paths:
+            logger.info(f"Trying alternative: {alt} (exists: {alt.exists()})")
+            if alt.exists():
+                try:
+                    with open(alt, 'r') as f:
+                        data = json.load(f)
+                        symbols = data.get('symbols', [])
+                        logger.info(f"SUCCESS: Loaded {len(symbols)} symbols from {alt}")
+                        return symbols
+                except Exception as e:
+                    logger.error(f"Failed to load from {alt}: {e}")
         return []
     except Exception as e:
         logger.error(f"Error loading watchlist: {e}")

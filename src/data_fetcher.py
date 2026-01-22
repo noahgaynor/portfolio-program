@@ -90,6 +90,7 @@ class DataFetcher:
             DataFrame with OHLCV data or None if failed
         """
         try:
+            logger.debug(f"Fetching {symbol} {interval} data (lookback={lookback_days} days)")
             ticker = yf.Ticker(symbol)
 
             # Calculate date range
@@ -104,14 +105,26 @@ class DataFetcher:
                 auto_adjust=True
             )
 
-            if df.empty or len(df) < MIN_HISTORY_DAYS // (7 if interval == '1wk' else 30 if interval == '1mo' else 1):
-                logger.warning(f"Insufficient data for {symbol} at {interval} interval")
+            if df is None:
+                logger.warning(f"No data returned for {symbol} at {interval}")
                 return None
 
+            if df.empty:
+                logger.warning(f"Empty dataframe for {symbol} at {interval}")
+                return None
+
+            min_required = MIN_HISTORY_DAYS // (7 if interval == '1wk' else 30 if interval == '1mo' else 1)
+            if len(df) < min_required:
+                logger.warning(f"Insufficient data for {symbol} at {interval}: {len(df)} < {min_required}")
+                return None
+
+            logger.debug(f"Success: {symbol} {interval} - {len(df)} rows")
             return df
 
         except Exception as e:
-            logger.error(f"Error fetching data for {symbol}: {e}")
+            logger.error(f"Error fetching data for {symbol} ({interval}): {e}")
+            import traceback
+            logger.error(traceback.format_exc())
             return None
 
     def fetch_multi_timeframe(
@@ -142,8 +155,8 @@ class DataFetcher:
             df = self.fetch_ohlcv(symbol, tf_interval, adjusted_lookback)
             result[tf_name] = df
 
-            # Small delay to avoid rate limiting
-            time.sleep(0.1)
+            # Delay to avoid rate limiting (increased for reliability)
+            time.sleep(0.5)
 
         return result
 
