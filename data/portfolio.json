@@ -1,6 +1,31 @@
 {
-  "positions": {},
-  "cash_weight": 1.0,
-  "last_update": "2026-01-22T04:23:57.183807",
+  "positions": {
+    "KLAC": {
+      "symbol": "KLAC",
+      "name": "KLA Corporation",
+      "sector": "Technology",
+      "entry_price": 1520.0,
+      "entry_date": "2026-01-22T04:27:25.870957",
+      "weight": 0.06666666666666667
+    },
+    "LRCX": {
+      "symbol": "LRCX",
+      "name": "Lam Research Corporation",
+      "sector": "Technology",
+      "entry_price": 228.38999938964844,
+      "entry_date": "2026-01-22T04:27:25.870957",
+      "weight": 0.06666666666666667
+    },
+    "MU": {
+      "symbol": "MU",
+      "name": "Micron Technology, Inc.",
+      "sector": "Technology",
+      "entry_price": 389.1099853515625,
+      "entry_date": "2026-01-22T04:27:25.870957",
+      "weight": 0.06666666666666667
+    }
+  },
+  "cash_weight": 0.8,
+  "last_update": "2026-01-22T04:27:25.870957",
   "inception_date": "2026-01-22T00:00:00"
 }

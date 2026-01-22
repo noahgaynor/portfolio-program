@@ -31,5 +31,47 @@
       "sector_allocation": {},
       "num_sectors": 0
     }
+  },
+  {
+    "timestamp": "2026-01-22T04:27:25.870957",
+    "buys": [
+      {
+        "symbol": "KLAC",
+        "name": "KLA Corporation",
+        "sector": "Technology",
+        "entry_price": 1520.0,
+        "entry_date": "2026-01-22T04:27:25.870957",
+        "weight": 0.03333333333333333
+      },
+      {
+        "symbol": "LRCX",
+        "name": "Lam Research Corporation",
+        "sector": "Technology",
+        "entry_price": 228.38999938964844,
+        "entry_date": "2026-01-22T04:27:25.870957",
+        "weight": 0.03333333333333333
+      },
+      {
+        "symbol": "MU",
+        "name": "Micron Technology, Inc.",
+        "sector": "Technology",
+        "entry_price": 389.1099853515625,
+        "entry_date": "2026-01-22T04:27:25.870957",
+        "weight": 0.03333333333333333
+      }
+    ],
+    "sells": [],
+    "portfolio_snapshot": {
+      "positions": [
+        "KLAC",
+        "LRCX",
+        "MU"
+      ],
+      "num_positions": 3,
+      "sector_allocation": {
+        "Technology": 0.2
+      },
+      "num_sectors": 1
+    }
   }
 ]
