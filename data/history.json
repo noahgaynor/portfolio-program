@@ -107,5 +107,57 @@
       },
       "num_sectors": 1
     }
+  },
+  {
+    "timestamp": "2026-01-22T17:32:27.340854",
+    "buys": [
+      {
+        "symbol": "AMD",
+        "name": "Advanced Micro Devices, Inc.",
+        "sector": "Technology",
+        "entry_price": 254.89999389648438,
+        "entry_date": "2026-01-22T17:32:27.340854",
+        "weight": 0.07
+      },
+      {
+        "symbol": "GOOGL",
+        "name": "Alphabet Inc.",
+        "sector": "Communication Services",
+        "entry_price": 331.7200012207031,
+        "entry_date": "2026-01-22T17:32:27.340854",
+        "weight": 0.07
+      },
+      {
+        "symbol": "INTC",
+        "name": "Intel Corporation",
+        "sector": "Technology",
+        "entry_price": 54.125,
+        "entry_date": "2026-01-22T17:32:27.340854",
+        "weight": 0.07
+      },
+      {
+        "symbol": "AMAT",
+        "name": "Applied Materials, Inc.",
+        "sector": "Technology",
+        "entry_price": 322.30999755859375,
+        "entry_date": "2026-01-22T17:32:27.340854",
+        "weight": 0.07
+      }
+    ],
+    "sells": [],
+    "portfolio_snapshot": {
+      "positions": [
+        "KLAC",
+        "LRCX",
+        "MU",
+        "AMD",
+        "GOOGL",
+        "INTC",
+        "AMAT"
+      ],
+      "num_positions": 7,
+      "total_invested": 0.49000000000000005,
+      "cash_weight": 0.51
+    }
   }
 ]
