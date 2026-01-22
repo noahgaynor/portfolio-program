@@ -20,5 +20,16 @@
       "sector_allocation": {},
       "num_sectors": 0
     }
+  },
+  {
+    "timestamp": "2026-01-22T04:23:57.183807",
+    "buys": [],
+    "sells": [],
+    "portfolio_snapshot": {
+      "positions": [],
+      "num_positions": 0,
+      "sector_allocation": {},
+      "num_sectors": 0
+    }
   }
 ]
