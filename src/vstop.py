@@ -82,10 +82,15 @@ def calculate_vstop(
     src = source.fillna(close).values
     atr_m = atr_mult.values
 
-    # Initialize first valid values
-    first_valid = max(length, source.first_valid_index() or 0)
-    if isinstance(first_valid, pd.Timestamp):
-        first_valid = source.index.get_loc(first_valid)
+    # Get the integer position of the first valid index
+    first_valid_idx = source.first_valid_index()
+    if first_valid_idx is not None:
+        first_valid_pos = source.index.get_loc(first_valid_idx)
+    else:
+        first_valid_pos = 0
+
+    # Ensure we have enough data for ATR calculation
+    start_pos = max(length, first_valid_pos)
 
     # Set initial values
     trend_up[0] = True
