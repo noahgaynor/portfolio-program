@@ -1,6 +1,17 @@
 {
   "scan_results": {},
-  "signal_summary": {},
+  "signal_summary": {
+    "total_scanned": 0,
+    "all_bullish_count": 0,
+    "all_bearish_count": 0,
+    "all_bullish": [],
+    "all_bearish": [],
+    "daily_only": [],
+    "weekly_only": [],
+    "monthly_only": [],
+    "mixed": [],
+    "scan_time": "2026-01-22T04:13:31.803999"
+  },
   "qualifying_stocks": [],
-  "last_update": null
+  "last_update": "2026-01-22T04:13:31.804602"
 }
