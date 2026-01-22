@@ -85,14 +85,9 @@ jobs:
       pages: write
       id-token: write
 
-    # Only deploy if pages is enabled
-    if: github.ref == 'refs/heads/main'
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: main  # Get latest changes including the data update
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
