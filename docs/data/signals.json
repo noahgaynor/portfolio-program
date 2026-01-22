@@ -10,13 +10,13 @@
       "daily_bullish": false,
       "weekly_bullish": false,
       "monthly_bullish": true,
-      "daily_stop": 256.37454453602487,
-      "weekly_stop": 270.13108447408996,
-      "monthly_stop": 232.55476201889516,
+      "daily_stop": 256.37454453628703,
+      "weekly_stop": 270.1310833013495,
+      "monthly_stop": 232.5547609419072,
       "daily_bars_in_trend": 25,
       "weekly_bars_in_trend": 2,
       "monthly_bars_in_trend": 5,
-      "scan_time": "2026-01-22T04:34:30.158643"
+      "scan_time": "2026-01-22T04:40:11.642409"
     },
     "MSFT": {
       "symbol": "MSFT",
@@ -28,13 +28,13 @@
       "daily_bullish": false,
       "weekly_bullish": false,
       "monthly_bullish": false,
-      "daily_stop": 461.8284816456237,
-      "weekly_stop": 484.66781468850127,
-      "monthly_stop": 522.5115788566909,
+      "daily_stop": 461.8284816252401,
+      "weekly_stop": 484.66781474866735,
+      "monthly_stop": 522.5115806405364,
       "daily_bars_in_trend": 13,
       "weekly_bars_in_trend": 10,
       "monthly_bars_in_trend": 1,
-      "scan_time": "2026-01-22T04:34:32.242038"
+      "scan_time": "2026-01-22T04:40:13.760717"
     },
     "GOOGL": {
       "symbol": "GOOGL",
@@ -46,13 +46,13 @@
       "daily_bullish": true,
       "weekly_bullish": true,
       "monthly_bullish": true,
-      "daily_stop": 320.7680455168172,
-      "weekly_stop": 299.6240652146718,
-      "monthly_stop": 276.57523703844953,
+      "daily_stop": 320.76804551600526,
+      "weekly_stop": 299.62406592280075,
+      "monthly_stop": 276.57523834209667,
       "daily_bars_in_trend": 19,
       "weekly_bars_in_trend": 36,
       "monthly_bars_in_trend": 6,
-      "scan_time": "2026-01-22T04:34:34.304453"
+      "scan_time": "2026-01-22T04:40:15.669165"
     },
     "AMZN": {
       "symbol": "AMZN",
@@ -70,7 +70,7 @@
       "daily_bars_in_trend": 5,
       "weekly_bars_in_trend": 37,
       "monthly_bars_in_trend": 7,
-      "scan_time": "2026-01-22T04:34:36.282759"
+      "scan_time": "2026-01-22T04:40:17.591082"
     },
     "NVDA": {
       "symbol": "NVDA",
@@ -82,13 +82,13 @@
       "daily_bullish": false,
       "weekly_bullish": false,
       "monthly_bullish": true,
-      "daily_stop": 189.24406646190172,
-      "weekly_stop": 201.0060368430623,
-      "monthly_stop": 162.02611752845277,
+      "daily_stop": 189.2440664618292,
+      "weekly_stop": 201.00603664006687,
+      "monthly_stop": 162.02611817447638,
       "daily_bars_in_trend": 2,
       "weekly_bars_in_trend": 9,
       "monthly_bars_in_trend": 8,
-      "scan_time": "2026-01-22T04:34:38.401747"
+      "scan_time": "2026-01-22T04:40:19.528489"
     },
     "META": {
       "symbol": "META",
@@ -101,12 +101,12 @@
       "weekly_bullish": false,
       "monthly_bullish": false,
       "daily_stop": 635.2310207688286,
-      "weekly_stop": 676.2716468385073,
-      "monthly_stop": 757.7481186194624,
+      "weekly_stop": 676.2716438240789,
+      "monthly_stop": 757.7481145135848,
       "daily_bars_in_trend": 6,
       "weekly_bars_in_trend": 13,
       "monthly_bars_in_trend": 1,
-      "scan_time": "2026-01-22T04:34:40.544450"
+      "scan_time": "2026-01-22T04:40:21.457135"
     },
     "TSLA": {
       "symbol": "TSLA",
@@ -124,7 +124,7 @@
       "daily_bars_in_trend": 15,
       "weekly_bars_in_trend": 37,
       "monthly_bars_in_trend": 5,
-      "scan_time": "2026-01-22T04:34:42.536752"
+      "scan_time": "2026-01-22T04:40:23.381041"
     },
     "AMD": {
       "symbol": "AMD",
@@ -142,7 +142,7 @@
       "daily_bars_in_trend": 5,
       "weekly_bars_in_trend": 1,
       "monthly_bars_in_trend": 7,
-      "scan_time": "2026-01-22T04:34:44.585250"
+      "scan_time": "2026-01-22T04:40:25.270290"
     },
     "NFLX": {
       "symbol": "NFLX",
@@ -160,7 +160,7 @@
       "daily_bars_in_trend": 41,
       "weekly_bars_in_trend": 27,
       "monthly_bars_in_trend": 4,
-      "scan_time": "2026-01-22T04:34:46.631475"
+      "scan_time": "2026-01-22T04:40:27.222528"
     },
     "CRM": {
       "symbol": "CRM",
@@ -172,13 +172,13 @@
       "daily_bullish": false,
       "weekly_bullish": false,
       "monthly_bullish": false,
-      "daily_stop": 233.81109382353907,
-      "weekly_stop": 256.18847910475887,
-      "monthly_stop": 294.34422818475036,
+      "daily_stop": 233.8110938244435,
+      "weekly_stop": 256.1884807124583,
+      "monthly_stop": 294.3442271036091,
       "daily_bars_in_trend": 6,
       "weekly_bars_in_trend": 2,
       "monthly_bars_in_trend": 11,
-      "scan_time": "2026-01-22T04:34:48.626628"
+      "scan_time": "2026-01-22T04:40:29.061061"
     },
     "ADBE": {
       "symbol": "ADBE",
@@ -196,7 +196,7 @@
       "daily_bars_in_trend": 13,
       "weekly_bars_in_trend": 26,
       "monthly_bars_in_trend": 22,
-      "scan_time": "2026-01-22T04:34:50.678913"
+      "scan_time": "2026-01-22T04:40:30.968300"
     },
     "ORCL": {
       "symbol": "ORCL",
@@ -208,13 +208,13 @@
       "daily_bullish": false,
       "weekly_bullish": false,
       "monthly_bullish": false,
-      "daily_stop": 191.2132807354789,
-      "weekly_stop": 220.11024865399943,
-      "monthly_stop": 240.1637528087666,
+      "daily_stop": 191.21328053545466,
+      "weekly_stop": 220.11024913294398,
+      "monthly_stop": 240.16375420388545,
       "daily_bars_in_trend": 2,
       "weekly_bars_in_trend": 13,
       "monthly_bars_in_trend": 3,
-      "scan_time": "2026-01-22T04:34:52.748891"
+      "scan_time": "2026-01-22T04:40:32.852209"
     },
     "INTC": {
       "symbol": "INTC",
@@ -227,12 +227,12 @@
       "weekly_bullish": true,
       "monthly_bullish": true,
       "daily_stop": 49.374735223554865,
-      "weekly_stop": 46.094614796872506,
-      "monthly_stop": 39.78198609569719,
+      "weekly_stop": 46.09461479703934,
+      "monthly_stop": 39.7819861633488,
       "daily_bars_in_trend": 13,
       "weekly_bars_in_trend": 24,
       "monthly_bars_in_trend": 5,
-      "scan_time": "2026-01-22T04:34:54.958745"
+      "scan_time": "2026-01-22T04:40:34.840615"
     },
     "QCOM": {
       "symbol": "QCOM",
@@ -244,13 +244,13 @@
       "daily_bullish": false,
       "weekly_bullish": false,
       "monthly_bullish": false,
-      "daily_stop": 163.48598158609545,
-      "weekly_stop": 178.05459418351484,
-      "monthly_stop": 187.6728731652842,
+      "daily_stop": 163.48598158549171,
+      "weekly_stop": 178.05459438677585,
+      "monthly_stop": 187.67289018430327,
       "daily_bars_in_trend": 7,
       "weekly_bars_in_trend": 1,
       "monthly_bars_in_trend": 14,
-      "scan_time": "2026-01-22T04:34:57.298064"
+      "scan_time": "2026-01-22T04:40:36.798726"
     },
     "AVGO": {
       "symbol": "AVGO",
@@ -262,13 +262,13 @@
       "daily_bullish": true,
       "weekly_bullish": false,
       "monthly_bullish": false,
-      "daily_stop": 327.3380082936832,
-      "weekly_stop": 386.43587066663974,
-      "monthly_stop": 406.20101640580606,
+      "daily_stop": 327.3380082534315,
+      "weekly_stop": 386.4358707363673,
+      "monthly_stop": 406.20101466670343,
       "daily_bars_in_trend": 6,
       "weekly_bars_in_trend": 6,
       "monthly_bars_in_trend": 1,
-      "scan_time": "2026-01-22T04:34:59.442334"
+      "scan_time": "2026-01-22T04:40:38.801275"
     },
     "TXN": {
       "symbol": "TXN",
@@ -280,13 +280,13 @@
       "daily_bullish": true,
       "weekly_bullish": true,
       "monthly_bullish": false,
-      "daily_stop": 184.6985726910718,
-      "weekly_stop": 172.72319261205385,
-      "monthly_stop": 204.8098694190751,
+      "daily_stop": 184.6985726909686,
+      "weekly_stop": 172.7231925791986,
+      "monthly_stop": 204.8098693253691,
       "daily_bars_in_trend": 11,
       "weekly_bars_in_trend": 3,
       "monthly_bars_in_trend": 4,
-      "scan_time": "2026-01-22T04:35:01.710258"
+      "scan_time": "2026-01-22T04:40:41.002616"
     },
     "MU": {
       "symbol": "MU",
@@ -298,13 +298,13 @@
       "daily_bullish": true,
       "weekly_bullish": true,
       "monthly_bullish": true,
-      "daily_stop": 355.77821292818084,
-      "weekly_stop": 340.7529141313872,
-      "monthly_stop": 323.2812986740346,
+      "daily_stop": 355.7782129831195,
+      "weekly_stop": 340.7529135054738,
+      "monthly_stop": 323.28129823103825,
       "daily_bars_in_trend": 21,
       "weekly_bars_in_trend": 6,
       "monthly_bars_in_trend": 8,
-      "scan_time": "2026-01-22T04:35:03.879730"
+      "scan_time": "2026-01-22T04:40:43.246696"
     },
     "AMAT": {
       "symbol": "AMAT",
@@ -316,13 +316,13 @@
       "daily_bullish": true,
       "weekly_bullish": true,
       "monthly_bullish": true,
-      "daily_stop": 306.22751820895553,
-      "weekly_stop": 290.183218220796,
-      "monthly_stop": 259.381946768442,
+      "daily_stop": 306.2275182339745,
+      "weekly_stop": 290.1832181178,
+      "monthly_stop": 259.3819480842743,
       "daily_bars_in_trend": 13,
       "weekly_bars_in_trend": 19,
       "monthly_bars_in_trend": 5,
-      "scan_time": "2026-01-22T04:35:06.041957"
+      "scan_time": "2026-01-22T04:40:45.207914"
     },
     "LRCX": {
       "symbol": "LRCX",
@@ -334,13 +334,13 @@
       "daily_bullish": true,
       "weekly_bullish": true,
       "monthly_bullish": true,
-      "daily_stop": 211.107423412047,
-      "weekly_stop": 201.6045383001702,
-      "monthly_stop": 190.4084214852288,
+      "daily_stop": 211.10742341206713,
+      "weekly_stop": 201.6045385501866,
+      "monthly_stop": 190.4084203748157,
       "daily_bars_in_trend": 21,
       "weekly_bars_in_trend": 39,
       "monthly_bars_in_trend": 8,
-      "scan_time": "2026-01-22T04:35:08.088627"
+      "scan_time": "2026-01-22T04:40:47.119396"
     },
     "KLAC": {
       "symbol": "KLAC",
@@ -352,13 +352,13 @@
       "daily_bullish": true,
       "weekly_bullish": true,
       "monthly_bullish": true,
-      "daily_stop": 1469.729087696676,
-      "weekly_stop": 1393.9083678412758,
-      "monthly_stop": 1253.759826134677,
+      "daily_stop": 1469.729087723347,
+      "weekly_stop": 1393.9083665534408,
+      "monthly_stop": 1253.7598296454594,
       "daily_bars_in_trend": 34,
       "weekly_bars_in_trend": 39,
       "monthly_bars_in_trend": 8,
-      "scan_time": "2026-01-22T04:35:10.233978"
+      "scan_time": "2026-01-22T04:40:49.180620"
     },
     "NOW": {
       "symbol": "NOW",
@@ -376,7 +376,7 @@
       "daily_bars_in_trend": 25,
       "weekly_bars_in_trend": 25,
       "monthly_bars_in_trend": 2,
-      "scan_time": "2026-01-22T04:35:12.217558"
+      "scan_time": "2026-01-22T04:40:51.115246"
     },
     "SNOW": {
       "symbol": "SNOW",
@@ -394,7 +394,7 @@
       "daily_bars_in_trend": 6,
       "weekly_bars_in_trend": 10,
       "monthly_bars_in_trend": 9,
-      "scan_time": "2026-01-22T04:35:14.254424"
+      "scan_time": "2026-01-22T04:40:53.050857"
     },
     "PANW": {
       "symbol": "PANW",
@@ -412,7 +412,7 @@
       "daily_bars_in_trend": 2,
       "weekly_bars_in_trend": 10,
       "monthly_bars_in_trend": 35,
-      "scan_time": "2026-01-22T04:35:16.305588"
+      "scan_time": "2026-01-22T04:40:55.063342"
     },
     "CRWD": {
       "symbol": "CRWD",
@@ -430,7 +430,7 @@
       "daily_bars_in_trend": 43,
       "weekly_bars_in_trend": 4,
       "monthly_bars_in_trend": 15,
-      "scan_time": "2026-01-22T04:35:18.289682"
+      "scan_time": "2026-01-22T04:40:56.931223"
     },
     "ZS": {
       "symbol": "ZS",
@@ -448,7 +448,7 @@
       "daily_bars_in_trend": 51,
       "weekly_bars_in_trend": 10,
       "monthly_bars_in_trend": 2,
-      "scan_time": "2026-01-22T04:35:20.266259"
+      "scan_time": "2026-01-22T04:40:58.764845"
     },
     "DDOG": {
       "symbol": "DDOG",
@@ -466,7 +466,7 @@
       "daily_bars_in_trend": 45,
       "weekly_bars_in_trend": 10,
       "monthly_bars_in_trend": 4,
-      "scan_time": "2026-01-22T04:35:22.247465"
+      "scan_time": "2026-01-22T04:41:00.814409"
     },
     "NET": {
       "symbol": "NET",
@@ -484,7 +484,7 @@
       "daily_bars_in_trend": 23,
       "weekly_bars_in_trend": 11,
       "monthly_bars_in_trend": 1,
-      "scan_time": "2026-01-22T04:35:24.225552"
+      "scan_time": "2026-01-22T04:41:02.766542"
     },
     "SHOP": {
       "symbol": "SHOP",
@@ -502,7 +502,7 @@
       "daily_bars_in_trend": 13,
       "weekly_bars_in_trend": 11,
       "monthly_bars_in_trend": 27,
-      "scan_time": "2026-01-22T04:35:26.214490"
+      "scan_time": "2026-01-22T04:41:04.638510"
     },
     "UBER": {
       "symbol": "UBER",
@@ -520,7 +520,7 @@
       "daily_bars_in_trend": 11,
       "weekly_bars_in_trend": 10,
       "monthly_bars_in_trend": 9,
-      "scan_time": "2026-01-22T04:35:28.318314"
+      "scan_time": "2026-01-22T04:41:06.454585"
     },
     "PYPL": {
       "symbol": "PYPL",
@@ -538,7 +538,7 @@
       "daily_bars_in_trend": 16,
       "weekly_bars_in_trend": 26,
       "monthly_bars_in_trend": 59,
-      "scan_time": "2026-01-22T04:35:30.325729"
+      "scan_time": "2026-01-22T04:41:08.381184"
     }
   },
   "signal_summary": {
@@ -556,13 +556,13 @@
         "daily_bullish": true,
         "weekly_bullish": true,
         "monthly_bullish": true,
-        "daily_stop": 320.7680455168172,
-        "weekly_stop": 299.6240652146718,
-        "monthly_stop": 276.57523703844953,
+        "daily_stop": 320.76804551600526,
+        "weekly_stop": 299.62406592280075,
+        "monthly_stop": 276.57523834209667,
         "daily_bars_in_trend": 19,
         "weekly_bars_in_trend": 36,
         "monthly_bars_in_trend": 6,
-        "scan_time": "2026-01-22T04:34:34.304453"
+        "scan_time": "2026-01-22T04:40:15.669165"
       },
       {
         "symbol": "AMD",
@@ -580,7 +580,7 @@
         "daily_bars_in_trend": 5,
         "weekly_bars_in_trend": 1,
         "monthly_bars_in_trend": 7,
-        "scan_time": "2026-01-22T04:34:44.585250"
+        "scan_time": "2026-01-22T04:40:25.270290"
       },
       {
         "symbol": "INTC",
@@ -593,12 +593,12 @@
         "weekly_bullish": true,
         "monthly_bullish": true,
         "daily_stop": 49.374735223554865,
-        "weekly_stop": 46.094614796872506,
-        "monthly_stop": 39.78198609569719,
+        "weekly_stop": 46.09461479703934,
+        "monthly_stop": 39.7819861633488,
         "daily_bars_in_trend": 13,
         "weekly_bars_in_trend": 24,
         "monthly_bars_in_trend": 5,
-        "scan_time": "2026-01-22T04:34:54.958745"
+        "scan_time": "2026-01-22T04:40:34.840615"
       },
       {
         "symbol": "MU",
@@ -610,13 +610,13 @@
         "daily_bullish": true,
         "weekly_bullish": true,
         "monthly_bullish": true,
-        "daily_stop": 355.77821292818084,
-        "weekly_stop": 340.7529141313872,
-        "monthly_stop": 323.2812986740346,
+        "daily_stop": 355.7782129831195,
+        "weekly_stop": 340.7529135054738,
+        "monthly_stop": 323.28129823103825,
         "daily_bars_in_trend": 21,
         "weekly_bars_in_trend": 6,
         "monthly_bars_in_trend": 8,
-        "scan_time": "2026-01-22T04:35:03.879730"
+        "scan_time": "2026-01-22T04:40:43.246696"
       },
       {
         "symbol": "AMAT",
@@ -628,13 +628,13 @@
         "daily_bullish": true,
         "weekly_bullish": true,
         "monthly_bullish": true,
-        "daily_stop": 306.22751820895553,
-        "weekly_stop": 290.183218220796,
-        "monthly_stop": 259.381946768442,
+        "daily_stop": 306.2275182339745,
+        "weekly_stop": 290.1832181178,
+        "monthly_stop": 259.3819480842743,
         "daily_bars_in_trend": 13,
         "weekly_bars_in_trend": 19,
         "monthly_bars_in_trend": 5,
-        "scan_time": "2026-01-22T04:35:06.041957"
+        "scan_time": "2026-01-22T04:40:45.207914"
       },
       {
         "symbol": "LRCX",
@@ -646,13 +646,13 @@
         "daily_bullish": true,
         "weekly_bullish": true,
         "monthly_bullish": true,
-        "daily_stop": 211.107423412047,
-        "weekly_stop": 201.6045383001702,
-        "monthly_stop": 190.4084214852288,
+        "daily_stop": 211.10742341206713,
+        "weekly_stop": 201.6045385501866,
+        "monthly_stop": 190.4084203748157,
         "daily_bars_in_trend": 21,
         "weekly_bars_in_trend": 39,
         "monthly_bars_in_trend": 8,
-        "scan_time": "2026-01-22T04:35:08.088627"
+        "scan_time": "2026-01-22T04:40:47.119396"
       },
       {
         "symbol": "KLAC",
@@ -664,13 +664,13 @@
         "daily_bullish": true,
         "weekly_bullish": true,
         "monthly_bullish": true,
-        "daily_stop": 1469.729087696676,
-        "weekly_stop": 1393.9083678412758,
-        "monthly_stop": 1253.759826134677,
+        "daily_stop": 1469.729087723347,
+        "weekly_stop": 1393.9083665534408,
+        "monthly_stop": 1253.7598296454594,
         "daily_bars_in_trend": 34,
         "weekly_bars_in_trend": 39,
         "monthly_bars_in_trend": 8,
-        "scan_time": "2026-01-22T04:35:10.233978"
+        "scan_time": "2026-01-22T04:40:49.180620"
       }
     ],
     "all_bearish": [
@@ -684,13 +684,13 @@
         "daily_bullish": false,
         "weekly_bullish": false,
         "monthly_bullish": false,
-        "daily_stop": 461.8284816456237,
-        "weekly_stop": 484.66781468850127,
-        "monthly_stop": 522.5115788566909,
+        "daily_stop": 461.8284816252401,
+        "weekly_stop": 484.66781474866735,
+        "monthly_stop": 522.5115806405364,
         "daily_bars_in_trend": 13,
         "weekly_bars_in_trend": 10,
         "monthly_bars_in_trend": 1,
-        "scan_time": "2026-01-22T04:34:32.242038"
+        "scan_time": "2026-01-22T04:40:13.760717"
       },
       {
         "symbol": "META",
@@ -703,12 +703,12 @@
         "weekly_bullish": false,
         "monthly_bullish": false,
         "daily_stop": 635.2310207688286,
-        "weekly_stop": 676.2716468385073,
-        "monthly_stop": 757.7481186194624,
+        "weekly_stop": 676.2716438240789,
+        "monthly_stop": 757.7481145135848,
         "daily_bars_in_trend": 6,
         "weekly_bars_in_trend": 13,
         "monthly_bars_in_trend": 1,
-        "scan_time": "2026-01-22T04:34:40.544450"
+        "scan_time": "2026-01-22T04:40:21.457135"
       },
       {
         "symbol": "NFLX",
@@ -726,7 +726,7 @@
         "daily_bars_in_trend": 41,
         "weekly_bars_in_trend": 27,
         "monthly_bars_in_trend": 4,
-        "scan_time": "2026-01-22T04:34:46.631475"
+        "scan_time": "2026-01-22T04:40:27.222528"
       },
       {
         "symbol": "CRM",
@@ -738,13 +738,13 @@
         "daily_bullish": false,
         "weekly_bullish": false,
         "monthly_bullish": false,
-        "daily_stop": 233.81109382353907,
-        "weekly_stop": 256.18847910475887,
-        "monthly_stop": 294.34422818475036,
+        "daily_stop": 233.8110938244435,
+        "weekly_stop": 256.1884807124583,
+        "monthly_stop": 294.3442271036091,
         "daily_bars_in_trend": 6,
         "weekly_bars_in_trend": 2,
         "monthly_bars_in_trend": 11,
-        "scan_time": "2026-01-22T04:34:48.626628"
+        "scan_time": "2026-01-22T04:40:29.061061"
       },
       {
         "symbol": "ADBE",
@@ -762,7 +762,7 @@
         "daily_bars_in_trend": 13,
         "weekly_bars_in_trend": 26,
         "monthly_bars_in_trend": 22,
-        "scan_time": "2026-01-22T04:34:50.678913"
+        "scan_time": "2026-01-22T04:40:30.968300"
       },
       {
         "symbol": "ORCL",
@@ -774,13 +774,13 @@
         "daily_bullish": false,
         "weekly_bullish": false,
         "monthly_bullish": false,
-        "daily_stop": 191.2132807354789,
-        "weekly_stop": 220.11024865399943,
-        "monthly_stop": 240.1637528087666,
+        "daily_stop": 191.21328053545466,
+        "weekly_stop": 220.11024913294398,
+        "monthly_stop": 240.16375420388545,
         "daily_bars_in_trend": 2,
         "weekly_bars_in_trend": 13,
         "monthly_bars_in_trend": 3,
-        "scan_time": "2026-01-22T04:34:52.748891"
+        "scan_time": "2026-01-22T04:40:32.852209"
       },
       {
         "symbol": "QCOM",
@@ -792,13 +792,13 @@
         "daily_bullish": false,
         "weekly_bullish": false,
         "monthly_bullish": false,
-        "daily_stop": 163.48598158609545,
-        "weekly_stop": 178.05459418351484,
-        "monthly_stop": 187.6728731652842,
+        "daily_stop": 163.48598158549171,
+        "weekly_stop": 178.05459438677585,
+        "monthly_stop": 187.67289018430327,
         "daily_bars_in_trend": 7,
         "weekly_bars_in_trend": 1,
         "monthly_bars_in_trend": 14,
-        "scan_time": "2026-01-22T04:34:57.298064"
+        "scan_time": "2026-01-22T04:40:36.798726"
       },
       {
         "symbol": "NOW",
@@ -816,7 +816,7 @@
         "daily_bars_in_trend": 25,
         "weekly_bars_in_trend": 25,
         "monthly_bars_in_trend": 2,
-        "scan_time": "2026-01-22T04:35:12.217558"
+        "scan_time": "2026-01-22T04:40:51.115246"
       },
       {
         "symbol": "ZS",
@@ -834,7 +834,7 @@
         "daily_bars_in_trend": 51,
         "weekly_bars_in_trend": 10,
         "monthly_bars_in_trend": 2,
-        "scan_time": "2026-01-22T04:35:20.266259"
+        "scan_time": "2026-01-22T04:40:58.764845"
       },
       {
         "symbol": "NET",
@@ -852,7 +852,7 @@
         "daily_bars_in_trend": 23,
         "weekly_bars_in_trend": 11,
         "monthly_bars_in_trend": 1,
-        "scan_time": "2026-01-22T04:35:24.225552"
+        "scan_time": "2026-01-22T04:41:02.766542"
       },
       {
         "symbol": "PYPL",
@@ -870,7 +870,7 @@
         "daily_bars_in_trend": 16,
         "weekly_bars_in_trend": 26,
         "monthly_bars_in_trend": 59,
-        "scan_time": "2026-01-22T04:35:30.325729"
+        "scan_time": "2026-01-22T04:41:08.381184"
       }
     ],
     "daily_only": [
@@ -884,13 +884,13 @@
         "daily_bullish": true,
         "weekly_bullish": false,
         "monthly_bullish": false,
-        "daily_stop": 327.3380082936832,
-        "weekly_stop": 386.43587066663974,
-        "monthly_stop": 406.20101640580606,
+        "daily_stop": 327.3380082534315,
+        "weekly_stop": 386.4358707363673,
+        "monthly_stop": 406.20101466670343,
         "daily_bars_in_trend": 6,
         "weekly_bars_in_trend": 6,
         "monthly_bars_in_trend": 1,
-        "scan_time": "2026-01-22T04:34:59.442334"
+        "scan_time": "2026-01-22T04:40:38.801275"
       }
     ],
     "weekly_only": [],
@@ -905,13 +905,13 @@
         "daily_bullish": false,
         "weekly_bullish": false,
         "monthly_bullish": true,
-        "daily_stop": 256.37454453602487,
-        "weekly_stop": 270.13108447408996,
-        "monthly_stop": 232.55476201889516,
+        "daily_stop": 256.37454453628703,
+        "weekly_stop": 270.1310833013495,
+        "monthly_stop": 232.5547609419072,
         "daily_bars_in_trend": 25,
         "weekly_bars_in_trend": 2,
         "monthly_bars_in_trend": 5,
-        "scan_time": "2026-01-22T04:34:30.158643"
+        "scan_time": "2026-01-22T04:40:11.642409"
       },
       {
         "symbol": "NVDA",
@@ -923,13 +923,13 @@
         "daily_bullish": false,
         "weekly_bullish": false,
         "monthly_bullish": true,
-        "daily_stop": 189.24406646190172,
-        "weekly_stop": 201.0060368430623,
-        "monthly_stop": 162.02611752845277,
+        "daily_stop": 189.2440664618292,
+        "weekly_stop": 201.00603664006687,
+        "monthly_stop": 162.02611817447638,
         "daily_bars_in_trend": 2,
         "weekly_bars_in_trend": 9,
         "monthly_bars_in_trend": 8,
-        "scan_time": "2026-01-22T04:34:38.401747"
+        "scan_time": "2026-01-22T04:40:19.528489"
       },
       {
         "symbol": "SNOW",
@@ -947,7 +947,7 @@
         "daily_bars_in_trend": 6,
         "weekly_bars_in_trend": 10,
         "monthly_bars_in_trend": 9,
-        "scan_time": "2026-01-22T04:35:14.254424"
+        "scan_time": "2026-01-22T04:40:53.050857"
       },
       {
         "symbol": "PANW",
@@ -965,7 +965,7 @@
         "daily_bars_in_trend": 2,
         "weekly_bars_in_trend": 10,
         "monthly_bars_in_trend": 35,
-        "scan_time": "2026-01-22T04:35:16.305588"
+        "scan_time": "2026-01-22T04:40:55.063342"
       },
       {
         "symbol": "CRWD",
@@ -983,7 +983,7 @@
         "daily_bars_in_trend": 43,
         "weekly_bars_in_trend": 4,
         "monthly_bars_in_trend": 15,
-        "scan_time": "2026-01-22T04:35:18.289682"
+        "scan_time": "2026-01-22T04:40:56.931223"
       },
       {
         "symbol": "DDOG",
@@ -1001,7 +1001,7 @@
         "daily_bars_in_trend": 45,
         "weekly_bars_in_trend": 10,
         "monthly_bars_in_trend": 4,
-        "scan_time": "2026-01-22T04:35:22.247465"
+        "scan_time": "2026-01-22T04:41:00.814409"
       },
       {
         "symbol": "SHOP",
@@ -1019,7 +1019,7 @@
         "daily_bars_in_trend": 13,
         "weekly_bars_in_trend": 11,
         "monthly_bars_in_trend": 27,
-        "scan_time": "2026-01-22T04:35:26.214490"
+        "scan_time": "2026-01-22T04:41:04.638510"
       }
     ],
     "mixed": [
@@ -1039,7 +1039,7 @@
         "daily_bars_in_trend": 5,
         "weekly_bars_in_trend": 37,
         "monthly_bars_in_trend": 7,
-        "scan_time": "2026-01-22T04:34:36.282759"
+        "scan_time": "2026-01-22T04:40:17.591082"
       },
       {
         "symbol": "TSLA",
@@ -1057,7 +1057,7 @@
         "daily_bars_in_trend": 15,
         "weekly_bars_in_trend": 37,
         "monthly_bars_in_trend": 5,
-        "scan_time": "2026-01-22T04:34:42.536752"
+        "scan_time": "2026-01-22T04:40:23.381041"
       },
       {
         "symbol": "TXN",
@@ -1069,13 +1069,13 @@
         "daily_bullish": true,
         "weekly_bullish": true,
         "monthly_bullish": false,
-        "daily_stop": 184.6985726910718,
-        "weekly_stop": 172.72319261205385,
-        "monthly_stop": 204.8098694190751,
+        "daily_stop": 184.6985726909686,
+        "weekly_stop": 172.7231925791986,
+        "monthly_stop": 204.8098693253691,
         "daily_bars_in_trend": 11,
         "weekly_bars_in_trend": 3,
         "monthly_bars_in_trend": 4,
-        "scan_time": "2026-01-22T04:35:01.710258"
+        "scan_time": "2026-01-22T04:40:41.002616"
       },
       {
         "symbol": "UBER",
@@ -1093,10 +1093,10 @@
         "daily_bars_in_trend": 11,
         "weekly_bars_in_trend": 10,
         "monthly_bars_in_trend": 9,
-        "scan_time": "2026-01-22T04:35:28.318314"
+        "scan_time": "2026-01-22T04:41:06.454585"
       }
     ],
-    "scan_time": "2026-01-22T04:35:30.325921"
+    "scan_time": "2026-01-22T04:41:08.381303"
   },
   "qualifying_stocks": [
     {
@@ -1109,13 +1109,13 @@
       "daily_bullish": true,
       "weekly_bullish": true,
       "monthly_bullish": true,
-      "daily_stop": 1469.729087696676,
-      "weekly_stop": 1393.9083678412758,
-      "monthly_stop": 1253.759826134677,
+      "daily_stop": 1469.729087723347,
+      "weekly_stop": 1393.9083665534408,
+      "monthly_stop": 1253.7598296454594,
       "daily_bars_in_trend": 34,
       "weekly_bars_in_trend": 39,
       "monthly_bars_in_trend": 8,
-      "scan_time": "2026-01-22T04:35:10.233978"
+      "scan_time": "2026-01-22T04:40:49.180620"
     },
     {
       "symbol": "LRCX",
@@ -1127,13 +1127,13 @@
       "daily_bullish": true,
       "weekly_bullish": true,
       "monthly_bullish": true,
-      "daily_stop": 211.107423412047,
-      "weekly_stop": 201.6045383001702,
-      "monthly_stop": 190.4084214852288,
+      "daily_stop": 211.10742341206713,
+      "weekly_stop": 201.6045385501866,
+      "monthly_stop": 190.4084203748157,
       "daily_bars_in_trend": 21,
       "weekly_bars_in_trend": 39,
       "monthly_bars_in_trend": 8,
-      "scan_time": "2026-01-22T04:35:08.088627"
+      "scan_time": "2026-01-22T04:40:47.119396"
     },
     {
       "symbol": "MU",
@@ -1145,13 +1145,13 @@
       "daily_bullish": true,
       "weekly_bullish": true,
       "monthly_bullish": true,
-      "daily_stop": 355.77821292818084,
-      "weekly_stop": 340.7529141313872,
-      "monthly_stop": 323.2812986740346,
+      "daily_stop": 355.7782129831195,
+      "weekly_stop": 340.7529135054738,
+      "monthly_stop": 323.28129823103825,
       "daily_bars_in_trend": 21,
       "weekly_bars_in_trend": 6,
       "monthly_bars_in_trend": 8,
-      "scan_time": "2026-01-22T04:35:03.879730"
+      "scan_time": "2026-01-22T04:40:43.246696"
     },
     {
       "symbol": "AMD",
@@ -1169,7 +1169,7 @@
       "daily_bars_in_trend": 5,
       "weekly_bars_in_trend": 1,
       "monthly_bars_in_trend": 7,
-      "scan_time": "2026-01-22T04:34:44.585250"
+      "scan_time": "2026-01-22T04:40:25.270290"
     },
     {
       "symbol": "GOOGL",
@@ -1181,13 +1181,13 @@
       "daily_bullish": true,
       "weekly_bullish": true,
       "monthly_bullish": true,
-      "daily_stop": 320.7680455168172,
-      "weekly_stop": 299.6240652146718,
-      "monthly_stop": 276.57523703844953,
+      "daily_stop": 320.76804551600526,
+      "weekly_stop": 299.62406592280075,
+      "monthly_stop": 276.57523834209667,
       "daily_bars_in_trend": 19,
       "weekly_bars_in_trend": 36,
       "monthly_bars_in_trend": 6,
-      "scan_time": "2026-01-22T04:34:34.304453"
+      "scan_time": "2026-01-22T04:40:15.669165"
     },
     {
       "symbol": "INTC",
@@ -1200,12 +1200,12 @@
       "weekly_bullish": true,
       "monthly_bullish": true,
       "daily_stop": 49.374735223554865,
-      "weekly_stop": 46.094614796872506,
-      "monthly_stop": 39.78198609569719,
+      "weekly_stop": 46.09461479703934,
+      "monthly_stop": 39.7819861633488,
       "daily_bars_in_trend": 13,
       "weekly_bars_in_trend": 24,
       "monthly_bars_in_trend": 5,
-      "scan_time": "2026-01-22T04:34:54.958745"
+      "scan_time": "2026-01-22T04:40:34.840615"
     },
     {
       "symbol": "AMAT",
@@ -1217,14 +1217,14 @@
       "daily_bullish": true,
       "weekly_bullish": true,
       "monthly_bullish": true,
-      "daily_stop": 306.22751820895553,
-      "weekly_stop": 290.183218220796,
-      "monthly_stop": 259.381946768442,
+      "daily_stop": 306.2275182339745,
+      "weekly_stop": 290.1832181178,
+      "monthly_stop": 259.3819480842743,
       "daily_bars_in_trend": 13,
       "weekly_bars_in_trend": 19,
       "monthly_bars_in_trend": 5,
-      "scan_time": "2026-01-22T04:35:06.041957"
+      "scan_time": "2026-01-22T04:40:45.207914"
     }
   ],
-  "last_update": "2026-01-22T04:35:30.326707"
+  "last_update": "2026-01-22T04:41:08.382112"
 }

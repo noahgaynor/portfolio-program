@@ -90,5 +90,22 @@
       },
       "num_sectors": 1
     }
+  },
+  {
+    "timestamp": "2026-01-22T04:41:08.381518",
+    "buys": [],
+    "sells": [],
+    "portfolio_snapshot": {
+      "positions": [
+        "KLAC",
+        "LRCX",
+        "MU"
+      ],
+      "num_positions": 3,
+      "sector_allocation": {
+        "Technology": 0.2
+      },
+      "num_sectors": 1
+    }
   }
 ]
