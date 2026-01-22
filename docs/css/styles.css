@@ -1,0 +1,465 @@
+/* V-Stop Portfolio Dashboard Styles */
+
+:root {
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+    --success-color: #10b981;
+    --success-light: #d1fae5;
+    --danger-color: #ef4444;
+    --danger-light: #fee2e2;
+    --warning-color: #f59e0b;
+    --warning-light: #fef3c7;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --border-radius: 12px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--gray-100);
+    color: var(--gray-800);
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 24px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-radius: var(--border-radius);
+    color: white;
+    box-shadow: var(--shadow-lg);
+}
+
+.header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.header .subtitle {
+    font-size: 0.875rem;
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+.last-update {
+    text-align: right;
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
+
+.card h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+/* Summary Cards */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.summary-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+}
+
+.card-icon {
+    font-size: 2rem;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-100);
+    border-radius: 12px;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gray-900);
+}
+
+.card-label {
+    font-size: 0.875rem;
+    color: var(--gray-500);
+}
+
+/* Main Grid */
+.main-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 1024px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+th {
+    font-weight: 600;
+    color: var(--gray-600);
+    background: var(--gray-50);
+    position: sticky;
+    top: 0;
+}
+
+tbody tr:hover {
+    background: var(--gray-50);
+}
+
+.loading {
+    text-align: center;
+    color: var(--gray-500);
+    padding: 24px;
+}
+
+/* Signal Indicators */
+.signal-bullish {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+.signal-bearish {
+    color: var(--danger-color);
+    font-weight: 600;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.dot.bullish {
+    background: var(--success-color);
+}
+
+.dot.bearish {
+    background: var(--danger-color);
+}
+
+.signal-legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 0.875rem;
+    color: var(--gray-600);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+}
+
+/* Status Badges */
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-success {
+    background: var(--success-light);
+    color: var(--success-color);
+}
+
+.badge-danger {
+    background: var(--danger-light);
+    color: var(--danger-color);
+}
+
+.badge-warning {
+    background: var(--warning-light);
+    color: var(--warning-color);
+}
+
+/* Sector Chart */
+.sector-chart {
+    min-height: 200px;
+}
+
+.sector-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.sector-name {
+    width: 120px;
+    font-size: 0.875rem;
+    color: var(--gray-700);
+    flex-shrink: 0;
+}
+
+.sector-bar-container {
+    flex: 1;
+    height: 24px;
+    background: var(--gray-100);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 12px;
+}
+
+.sector-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.sector-value {
+    width: 50px;
+    text-align: right;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+/* Activity Feed */
+.activity-feed {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.activity-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.activity-icon.buy {
+    background: var(--success-light);
+}
+
+.activity-icon.sell {
+    background: var(--danger-light);
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    font-weight: 600;
+    color: var(--gray-800);
+    font-size: 0.875rem;
+}
+
+.activity-details {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    margin-top: 2px;
+}
+
+.activity-time {
+    font-size: 0.75rem;
+    color: var(--gray-400);
+}
+
+/* History Section */
+.history-section {
+    margin-bottom: 24px;
+}
+
+.action-buy {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+.action-sell {
+    color: var(--danger-color);
+    font-weight: 600;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--gray-500);
+    font-size: 0.875rem;
+}
+
+.footer .disclaimer {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: var(--gray-400);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 12px;
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .last-update {
+        text-align: center;
+    }
+
+    .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .summary-card {
+        padding: 16px;
+    }
+
+    .card-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+
+    .card-value {
+        font-size: 1.25rem;
+    }
+
+    table {
+        font-size: 0.75rem;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--gray-100);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gray-300);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-400);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--gray-500);
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.empty-state-text {
+    font-size: 0.875rem;
+}

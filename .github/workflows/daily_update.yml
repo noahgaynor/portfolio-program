@@ -1,0 +1,107 @@
+name: Daily Portfolio Update
+
+on:
+  # Run at 4:30 PM ET (21:30 UTC) on weekdays
+  schedule:
+    - cron: '30 21 * * 1-5'
+
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      symbols:
+        description: 'Comma-separated symbols to scan (optional, uses watchlist if empty)'
+        required: false
+        default: ''
+      skip_notify:
+        description: 'Skip Telegram notification'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  update-portfolio:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run portfolio update
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "${{ github.event.inputs.symbols }}" ]; then
+            SYMBOLS_ARGS="--symbols $(echo '${{ github.event.inputs.symbols }}' | tr ',' ' ')"
+          else
+            SYMBOLS_ARGS=""
+          fi
+
+          if [ "${{ github.event.inputs.skip_notify }}" = "true" ]; then
+            NOTIFY_ARG="--no-notify"
+          else
+            NOTIFY_ARG=""
+          fi
+
+          python -m src.main $SYMBOLS_ARGS $NOTIFY_ARG
+
+      - name: Commit and push data updates
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          # Add data files
+          git add data/*.json
+          git add docs/data/*.json
+
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Daily portfolio update $(date +'%Y-%m-%d')"
+            git push
+          fi
+
+  # Deploy to GitHub Pages (if configured)
+  deploy-pages:
+    needs: update-portfolio
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    # Only deploy if pages is enabled
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main  # Get latest changes including the data update
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,429 @@
+/**
+ * V-Stop Portfolio Dashboard
+ * Frontend JavaScript for loading and displaying portfolio data
+ */
+
+// Data URLs (relative to docs folder)
+const DATA_URLS = {
+    portfolio: 'data/portfolio.json',
+    history: 'data/history.json',
+    signals: 'data/signals.json',
+    watchlist: 'data/watchlist.json'
+};
+
+// State
+let portfolioData = null;
+let historyData = null;
+let signalsData = null;
+
+/**
+ * Fetch JSON data from URL
+ */
+async function fetchData(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(`Error fetching ${url}:`, error);
+        return null;
+    }
+}
+
+/**
+ * Format date string
+ */
+function formatDate(dateStr) {
+    if (!dateStr) return '-';
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+}
+
+/**
+ * Format currency
+ */
+function formatCurrency(value) {
+    if (value === null || value === undefined) return '-';
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    }).format(value);
+}
+
+/**
+ * Format percentage
+ */
+function formatPercent(value) {
+    if (value === null || value === undefined) return '-';
+    return `${(value * 100).toFixed(1)}%`;
+}
+
+/**
+ * Update last update time display
+ */
+function updateLastUpdateTime() {
+    const element = document.getElementById('last-update-time');
+    if (signalsData && signalsData.last_update) {
+        const date = new Date(signalsData.last_update);
+        element.textContent = `Last Update: ${date.toLocaleString()}`;
+    } else if (portfolioData && portfolioData.last_update) {
+        const date = new Date(portfolioData.last_update);
+        element.textContent = `Last Update: ${date.toLocaleString()}`;
+    } else {
+        element.textContent = 'No data available';
+    }
+}
+
+/**
+ * Update summary cards
+ */
+function updateSummaryCards() {
+    // Number of positions
+    const numPositions = portfolioData?.positions ?
+        Object.keys(portfolioData.positions).length : 0;
+    document.getElementById('num-positions').textContent = numPositions;
+
+    // Number of sectors
+    const sectors = new Set();
+    if (portfolioData?.positions) {
+        Object.values(portfolioData.positions).forEach(pos => {
+            if (pos.sector) sectors.add(pos.sector);
+        });
+    }
+    document.getElementById('num-sectors').textContent = sectors.size;
+
+    // Qualifying stocks
+    const numQualifying = signalsData?.qualifying_stocks?.length || 0;
+    document.getElementById('num-qualifying').textContent = numQualifying;
+
+    // Total return (placeholder - would need price data)
+    document.getElementById('total-return').textContent = '-';
+}
+
+/**
+ * Render portfolio table
+ */
+function renderPortfolioTable() {
+    const tbody = document.getElementById('portfolio-body');
+
+    if (!portfolioData?.positions || Object.keys(portfolioData.positions).length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <div class="empty-state-text">No positions in portfolio</div>
+                    </div>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    const positions = Object.values(portfolioData.positions);
+    positions.sort((a, b) => (b.weight || 0) - (a.weight || 0));
+
+    tbody.innerHTML = positions.map(pos => `
+        <tr>
+            <td><strong>${pos.symbol}</strong></td>
+            <td>${pos.name || '-'}</td>
+            <td>${pos.sector || 'Unknown'}</td>
+            <td>${formatCurrency(pos.entry_price)}</td>
+            <td>${formatPercent(pos.weight)}</td>
+            <td>${formatDate(pos.entry_date)}</td>
+        </tr>
+    `).join('');
+}
+
+/**
+ * Render sector allocation chart
+ */
+function renderSectorChart() {
+    const container = document.getElementById('sector-chart');
+
+    if (!portfolioData?.positions || Object.keys(portfolioData.positions).length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📊</div>
+                <div class="empty-state-text">No sector data available</div>
+            </div>
+        `;
+        return;
+    }
+
+    // Calculate sector allocations
+    const sectorWeights = {};
+    Object.values(portfolioData.positions).forEach(pos => {
+        const sector = pos.sector || 'Unknown';
+        sectorWeights[sector] = (sectorWeights[sector] || 0) + (pos.weight || 0);
+    });
+
+    // Sort by weight
+    const sortedSectors = Object.entries(sectorWeights)
+        .sort((a, b) => b[1] - a[1]);
+
+    const maxWeight = Math.max(...Object.values(sectorWeights), 0.2);
+
+    container.innerHTML = sortedSectors.map(([sector, weight]) => {
+        const barWidth = (weight / maxWeight) * 100;
+        return `
+            <div class="sector-bar">
+                <span class="sector-name">${sector}</span>
+                <div class="sector-bar-container">
+                    <div class="sector-bar-fill" style="width: ${barWidth}%"></div>
+                </div>
+                <span class="sector-value">${formatPercent(weight)}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+/**
+ * Render signals table
+ */
+function renderSignalsTable() {
+    const tbody = document.getElementById('signals-body');
+
+    if (!signalsData?.scan_results || Object.keys(signalsData.scan_results).length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📡</div>
+                        <div class="empty-state-text">No signal data available. Run the scanner to populate.</div>
+                    </div>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    const results = Object.values(signalsData.scan_results);
+    results.sort((a, b) => {
+        // Sort by all_bullish first, then by symbol
+        if (a.all_bullish !== b.all_bullish) {
+            return b.all_bullish - a.all_bullish;
+        }
+        return a.symbol.localeCompare(b.symbol);
+    });
+
+    tbody.innerHTML = results.map(result => {
+        const signalClass = (val) => val ? 'signal-bullish' : 'signal-bearish';
+        const signalText = (val) => val ? '▲' : '▼';
+        const statusBadge = result.all_bullish ?
+            '<span class="badge badge-success">QUALIFIED</span>' :
+            '<span class="badge badge-danger">NOT QUALIFIED</span>';
+
+        return `
+            <tr>
+                <td><strong>${result.symbol}</strong></td>
+                <td>${result.name || '-'}</td>
+                <td>${result.sector || 'Unknown'}</td>
+                <td>${formatCurrency(result.current_price)}</td>
+                <td class="${signalClass(result.daily_bullish)}">${signalText(result.daily_bullish)}</td>
+                <td class="${signalClass(result.weekly_bullish)}">${signalText(result.weekly_bullish)}</td>
+                <td class="${signalClass(result.monthly_bullish)}">${signalText(result.monthly_bullish)}</td>
+                <td>${statusBadge}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+/**
+ * Render activity feed
+ */
+function renderActivityFeed() {
+    const container = document.getElementById('activity-feed');
+
+    if (!historyData || historyData.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📝</div>
+                <div class="empty-state-text">No recent activity</div>
+            </div>
+        `;
+        return;
+    }
+
+    // Get last 10 activities from history
+    const activities = [];
+    historyData.slice(-10).reverse().forEach(record => {
+        if (record.buys) {
+            record.buys.forEach(buy => {
+                activities.push({
+                    type: 'buy',
+                    symbol: buy.symbol,
+                    name: buy.name,
+                    price: buy.entry_price,
+                    time: record.timestamp
+                });
+            });
+        }
+        if (record.sells) {
+            record.sells.forEach(sell => {
+                activities.push({
+                    type: 'sell',
+                    symbol: sell.symbol,
+                    name: sell.name,
+                    price: sell.exit_price,
+                    reason: sell.reason,
+                    time: record.timestamp
+                });
+            });
+        }
+    });
+
+    if (activities.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📝</div>
+                <div class="empty-state-text">No buy/sell activity yet</div>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = activities.slice(0, 10).map(activity => `
+        <div class="activity-item">
+            <div class="activity-icon ${activity.type}">
+                ${activity.type === 'buy' ? '🟢' : '🔴'}
+            </div>
+            <div class="activity-content">
+                <div class="activity-title">
+                    ${activity.type.toUpperCase()} ${activity.symbol}
+                </div>
+                <div class="activity-details">
+                    ${activity.name || ''} @ ${formatCurrency(activity.price)}
+                    ${activity.reason ? `<br>${activity.reason}` : ''}
+                </div>
+            </div>
+            <div class="activity-time">${formatDate(activity.time)}</div>
+        </div>
+    `).join('');
+}
+
+/**
+ * Render history table
+ */
+function renderHistoryTable() {
+    const tbody = document.getElementById('history-body');
+
+    if (!historyData || historyData.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📜</div>
+                        <div class="empty-state-text">No historical data available</div>
+                    </div>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    // Flatten history into individual transactions
+    const transactions = [];
+    historyData.forEach(record => {
+        if (record.buys) {
+            record.buys.forEach(buy => {
+                transactions.push({
+                    date: record.timestamp,
+                    action: 'BUY',
+                    symbol: buy.symbol,
+                    price: buy.entry_price,
+                    reason: `Weight: ${formatPercent(buy.weight)}`
+                });
+            });
+        }
+        if (record.sells) {
+            record.sells.forEach(sell => {
+                transactions.push({
+                    date: record.timestamp,
+                    action: 'SELL',
+                    symbol: sell.symbol,
+                    price: sell.exit_price,
+                    reason: sell.reason || 'Signal change'
+                });
+            });
+        }
+    });
+
+    // Sort by date descending
+    transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    if (transactions.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📜</div>
+                        <div class="empty-state-text">No transactions yet</div>
+                    </div>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = transactions.slice(0, 50).map(tx => `
+        <tr>
+            <td>${formatDate(tx.date)}</td>
+            <td class="${tx.action === 'BUY' ? 'action-buy' : 'action-sell'}">${tx.action}</td>
+            <td><strong>${tx.symbol}</strong></td>
+            <td>${formatCurrency(tx.price)}</td>
+            <td>${tx.reason}</td>
+        </tr>
+    `).join('');
+}
+
+/**
+ * Load all data and render dashboard
+ */
+async function loadDashboard() {
+    console.log('Loading dashboard data...');
+
+    // Fetch all data in parallel
+    const [portfolio, history, signals] = await Promise.all([
+        fetchData(DATA_URLS.portfolio),
+        fetchData(DATA_URLS.history),
+        fetchData(DATA_URLS.signals)
+    ]);
+
+    portfolioData = portfolio;
+    historyData = history;
+    signalsData = signals;
+
+    console.log('Data loaded:', { portfolioData, historyData, signalsData });
+
+    // Render all components
+    updateLastUpdateTime();
+    updateSummaryCards();
+    renderPortfolioTable();
+    renderSectorChart();
+    renderSignalsTable();
+    renderActivityFeed();
+    renderHistoryTable();
+}
+
+/**
+ * Initialize dashboard
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    loadDashboard();
+
+    // Refresh data every 5 minutes
+    setInterval(loadDashboard, 5 * 60 * 1000);
+});
+
+// Export for debugging
+window.dashboardState = {
+    getData: () => ({ portfolioData, historyData, signalsData }),
+    refresh: loadDashboard
+};

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V-Stop Portfolio Recommender</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>V-Stop Portfolio Recommender</h1>
+                <p class="subtitle">Multi-Timeframe Volatility Stop Strategy</p>
+            </div>
+            <div class="last-update">
+                <span id="last-update-time">Loading...</span>
+            </div>
+        </header>
+
+        <!-- Portfolio Summary Cards -->
+        <section class="summary-cards">
+            <div class="card summary-card">
+                <div class="card-icon positions-icon">📊</div>
+                <div class="card-content">
+                    <span class="card-value" id="num-positions">-</span>
+                    <span class="card-label">Positions</span>
+                </div>
+            </div>
+            <div class="card summary-card">
+                <div class="card-icon sectors-icon">🏢</div>
+                <div class="card-content">
+                    <span class="card-value" id="num-sectors">-</span>
+                    <span class="card-label">Sectors</span>
+                </div>
+            </div>
+            <div class="card summary-card">
+                <div class="card-icon qualifying-icon">✅</div>
+                <div class="card-content">
+                    <span class="card-value" id="num-qualifying">-</span>
+                    <span class="card-label">Qualifying</span>
+                </div>
+            </div>
+            <div class="card summary-card">
+                <div class="card-icon return-icon">📈</div>
+                <div class="card-content">
+                    <span class="card-value" id="total-return">-</span>
+                    <span class="card-label">Total Return</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="main-grid">
+            <!-- Current Portfolio -->
+            <section class="card portfolio-section">
+                <h2>Current Portfolio</h2>
+                <div class="table-container">
+                    <table id="portfolio-table">
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>Name</th>
+                                <th>Sector</th>
+                                <th>Entry Price</th>
+                                <th>Weight</th>
+                                <th>Entry Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="portfolio-body">
+                            <tr><td colspan="6" class="loading">Loading portfolio...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sector Allocation -->
+            <section class="card sector-section">
+                <h2>Sector Allocation</h2>
+                <div id="sector-chart" class="sector-chart">
+                    <div class="loading">Loading...</div>
+                </div>
+            </section>
+
+            <!-- Signal Status Grid -->
+            <section class="card signals-section">
+                <h2>Watchlist Signal Status</h2>
+                <div class="signal-legend">
+                    <span class="legend-item"><span class="dot bullish"></span> Bullish</span>
+                    <span class="legend-item"><span class="dot bearish"></span> Bearish</span>
+                </div>
+                <div class="table-container">
+                    <table id="signals-table">
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>Name</th>
+                                <th>Sector</th>
+                                <th>Price</th>
+                                <th>Daily</th>
+                                <th>Weekly</th>
+                                <th>Monthly</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="signals-body">
+                            <tr><td colspan="8" class="loading">Loading signals...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="card activity-section">
+                <h2>Recent Activity</h2>
+                <div id="activity-feed" class="activity-feed">
+                    <div class="loading">Loading activity...</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- History Section -->
+        <section class="card history-section">
+            <h2>Portfolio History</h2>
+            <div class="table-container">
+                <table id="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Action</th>
+                            <th>Symbol</th>
+                            <th>Price</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        <tr><td colspan="5" class="loading">Loading history...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>V-Stop Portfolio Recommender | Data updates daily after market close</p>
+            <p class="disclaimer">For informational purposes only. Not financial advice.</p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
