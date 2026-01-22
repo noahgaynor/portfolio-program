@@ -1,7 +1,7 @@
 """
 Portfolio Manager Module
 
-Manages portfolio allocation with sector constraints, tracks positions,
+Manages portfolio allocation with position weight constraints, tracks positions,
 and calculates performance metrics.
 """
 import json
@@ -13,8 +13,7 @@ from collections import defaultdict
 
 from config import (
     DATA_DIR,
-    MAX_SECTOR_ALLOCATION,
-    MIN_SECTORS_REQUIRED,
+    MAX_POSITION_WEIGHT,
     TARGET_POSITIONS
 )
 
@@ -96,137 +95,22 @@ class PortfolioManager:
         """Get list of currently held symbols."""
         return list(self.portfolio.get('positions', {}).keys())
 
-    def get_sector_allocations(self) -> Dict[str, float]:
-        """Calculate current allocation by sector."""
-        sector_weights = defaultdict(float)
-        positions = self.portfolio.get('positions', {})
-
-        for symbol, position in positions.items():
-            sector = position.get('sector', 'Unknown')
-            weight = position.get('weight', 0)
-            sector_weights[sector] += weight
-
-        return dict(sector_weights)
-
-    def get_sector_count(self) -> int:
-        """Get number of unique sectors in portfolio."""
-        positions = self.portfolio.get('positions', {})
-        sectors = set(p.get('sector', 'Unknown') for p in positions.values())
-        return len(sectors)
-
-    def calculate_allocations(
-        self,
-        qualifying_stocks: List[Dict],
-        current_positions: Dict[str, Dict]
-    ) -> Dict[str, float]:
+    def calculate_allocations(self, num_positions: int) -> float:
         """
-        Calculate target allocations respecting sector constraints.
-
-        Strategy:
-        1. Equal weight base allocation
-        2. Reduce weights for sectors exceeding MAX_SECTOR_ALLOCATION
-        3. Ensure MIN_SECTORS_REQUIRED is met
+        Calculate weight per position (max 7% each).
 
         Args:
-            qualifying_stocks: List of stocks that qualify for entry
-            current_positions: Current portfolio positions
+            num_positions: Number of positions to allocate
 
         Returns:
-            Dictionary mapping symbols to target weights
+            Weight per position (capped at MAX_POSITION_WEIGHT)
         """
-        if not qualifying_stocks:
-            return {}
+        if num_positions <= 0:
+            return 0.0
 
-        # Combine existing positions and new candidates
-        all_stocks = []
-
-        # Add current positions that are still qualifying
-        current_symbols = set(current_positions.keys())
-        for stock in qualifying_stocks:
-            if stock['symbol'] in current_symbols:
-                all_stocks.append(stock)
-
-        # Add new entry candidates
-        for stock in qualifying_stocks:
-            if stock['symbol'] not in current_symbols:
-                all_stocks.append(stock)
-
-        if not all_stocks:
-            return {}
-
-        # Start with equal weights
-        n_stocks = len(all_stocks)
-        base_weight = 1.0 / n_stocks
-
-        # Group by sector
-        sector_stocks = defaultdict(list)
-        for stock in all_stocks:
-            sector = stock.get('sector', 'Unknown')
-            sector_stocks[sector].append(stock)
-
-        # Calculate sector weights and adjust if needed
-        allocations = {}
-        sector_weights = {}
-
-        for sector, stocks in sector_stocks.items():
-            sector_total_weight = len(stocks) * base_weight
-
-            if sector_total_weight > MAX_SECTOR_ALLOCATION:
-                # Cap sector at MAX_SECTOR_ALLOCATION
-                adjusted_weight = MAX_SECTOR_ALLOCATION / len(stocks)
-                for stock in stocks:
-                    allocations[stock['symbol']] = adjusted_weight
-                sector_weights[sector] = MAX_SECTOR_ALLOCATION
-            else:
-                for stock in stocks:
-                    allocations[stock['symbol']] = base_weight
-                sector_weights[sector] = sector_total_weight
-
-        # Normalize weights to sum to 1.0 (or less if we're in cash)
-        total_weight = sum(allocations.values())
-        if total_weight > 0:
-            # Keep some cash if we don't have enough qualifying stocks
-            target_invested = min(1.0, total_weight)
-            scale_factor = target_invested / total_weight
-
-            for symbol in allocations:
-                allocations[symbol] *= scale_factor
-
-        return allocations
-
-    def check_sector_constraints(
-        self,
-        new_stock: Dict,
-        current_allocations: Dict[str, float],
-        stock_sectors: Dict[str, str]
-    ) -> Tuple[bool, str]:
-        """
-        Check if adding a new stock would violate sector constraints.
-
-        Args:
-            new_stock: Stock to potentially add
-            current_allocations: Current weight allocations
-            stock_sectors: Mapping of symbols to sectors
-
-        Returns:
-            Tuple of (is_allowed, reason_if_not)
-        """
-        new_sector = new_stock.get('sector', 'Unknown')
-
-        # Calculate current sector allocation
-        sector_weight = sum(
-            weight for symbol, weight in current_allocations.items()
-            if stock_sectors.get(symbol, 'Unknown') == new_sector
-        )
-
-        # Check if adding this stock would exceed sector limit
-        n_current = len(current_allocations)
-        proposed_weight = 1.0 / (n_current + 1)
-
-        if sector_weight + proposed_weight > MAX_SECTOR_ALLOCATION:
-            return False, f"Would exceed {MAX_SECTOR_ALLOCATION*100}% sector limit for {new_sector}"
-
-        return True, ""
+        # Each position gets equal weight, capped at MAX_POSITION_WEIGHT (7%)
+        equal_weight = 1.0 / num_positions
+        return min(equal_weight, MAX_POSITION_WEIGHT)
 
     def process_daily_update(
         self,
@@ -267,77 +151,39 @@ class PortfolioManager:
                 })
                 del current_positions[symbol]
 
-        # Calculate new allocations with remaining positions + new entries
-        remaining_qualifying = [
-            s for s in qualifying_stocks
-            if s['symbol'] in current_positions or s['symbol'] in [e['symbol'] for e in entry_candidates]
-        ]
-
-        new_allocations = self.calculate_allocations(
-            remaining_qualifying,
-            current_positions
-        )
-
-        # Process entries
+        # Process entries - add all qualifying new stocks (each gets 7% max)
         buys = []
         for entry_stock in entry_candidates:
             symbol = entry_stock['symbol']
 
-            # Get stock's sector info
-            stock_sectors = {
-                s: current_positions.get(s, {}).get('sector', scan_results.get(s, {}).get('sector', 'Unknown'))
-                for s in current_positions
+            buys.append({
+                'symbol': symbol,
+                'name': entry_stock.get('name', symbol),
+                'sector': entry_stock.get('sector', 'Unknown'),
+                'entry_price': entry_stock.get('current_price'),
+                'entry_date': timestamp,
+                'weight': MAX_POSITION_WEIGHT
+            })
+
+            current_positions[symbol] = {
+                'symbol': symbol,
+                'name': entry_stock.get('name', symbol),
+                'sector': entry_stock.get('sector', 'Unknown'),
+                'entry_price': entry_stock.get('current_price'),
+                'entry_date': timestamp,
+                'weight': MAX_POSITION_WEIGHT
             }
 
-            # Check sector constraints
-            allowed, reason = self.check_sector_constraints(
-                entry_stock,
-                {s: p.get('weight', 0) for s, p in current_positions.items()},
-                stock_sectors
-            )
-
-            if allowed or len(current_positions) < MIN_SECTORS_REQUIRED:
-                weight = new_allocations.get(symbol, 1.0 / max(len(new_allocations), 1))
-
-                buys.append({
-                    'symbol': symbol,
-                    'name': entry_stock.get('name', symbol),
-                    'sector': entry_stock.get('sector', 'Unknown'),
-                    'entry_price': entry_stock.get('current_price'),
-                    'entry_date': timestamp,
-                    'weight': weight
-                })
-
-                current_positions[symbol] = {
-                    'symbol': symbol,
-                    'name': entry_stock.get('name', symbol),
-                    'sector': entry_stock.get('sector', 'Unknown'),
-                    'entry_price': entry_stock.get('current_price'),
-                    'entry_date': timestamp,
-                    'weight': weight
-                }
-
-        # Recalculate all weights after changes
-        if current_positions:
-            final_qualifying = [
-                s for s in qualifying_stocks
-                if s['symbol'] in current_positions
-            ]
-            final_allocations = self.calculate_allocations(
-                final_qualifying,
-                {}  # Recalculate from scratch
-            )
-
-            for symbol, weight in final_allocations.items():
-                if symbol in current_positions:
-                    current_positions[symbol]['weight'] = weight
+        # Recalculate all weights - each position gets 7% max
+        total_invested = 0.0
+        for symbol in current_positions:
+            current_positions[symbol]['weight'] = MAX_POSITION_WEIGHT
+            total_invested += MAX_POSITION_WEIGHT
 
         # Update portfolio state
         self.portfolio['positions'] = current_positions
         self.portfolio['last_update'] = timestamp
-        self.portfolio['cash_weight'] = 1.0 - sum(
-            p.get('weight', 0) for p in current_positions.values()
-        )
+        self.portfolio['cash_weight'] = max(0.0, 1.0 - total_invested)
 
         # Create update record
         update_record = {
@@ -347,8 +193,8 @@ class PortfolioManager:
             'portfolio_snapshot': {
                 'positions': list(current_positions.keys()),
                 'num_positions': len(current_positions),
-                'sector_allocation': self.get_sector_allocations(),
-                'num_sectors': self.get_sector_count()
+                'total_invested': total_invested,
+                'cash_weight': self.portfolio['cash_weight']
             }
         }
 
@@ -369,12 +215,12 @@ class PortfolioManager:
             Dictionary with portfolio summary information
         """
         positions = self.portfolio.get('positions', {})
+        total_invested = sum(p.get('weight', 0) for p in positions.values())
 
         return {
             'num_positions': len(positions),
             'positions': list(positions.values()),
-            'sector_allocation': self.get_sector_allocations(),
-            'num_sectors': self.get_sector_count(),
+            'total_invested': total_invested,
             'cash_weight': self.portfolio.get('cash_weight', 1.0),
             'last_update': self.portfolio.get('last_update'),
             'inception_date': self.portfolio.get('inception_date')

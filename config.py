@@ -14,9 +14,8 @@ VSTOP_LENGTH = 20
 VSTOP_ATR_FACTOR = 2.0
 
 # Portfolio constraints
-MAX_SECTOR_ALLOCATION = 0.20  # 20% max per sector
-MIN_SECTORS_REQUIRED = 3      # Minimum 3 sectors in portfolio
-TARGET_POSITIONS = 20         # Target number of positions (can exceed)
+MAX_POSITION_WEIGHT = 0.07    # 7% max per single position
+TARGET_POSITIONS = 14         # Target number of positions (14 * 7% = 98%)
 
 # Timeframes for multi-timeframe analysis
 TIMEFRAMES = {

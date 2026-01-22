@@ -11,6 +11,13 @@ const DATA_URLS = {
     watchlist: 'data/watchlist.json'
 };
 
+// Color palette for pie chart
+const CHART_COLORS = [
+    '#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6',
+    '#06b6d4', '#ec4899', '#84cc16', '#f97316', '#6366f1',
+    '#14b8a6', '#a855f7', '#eab308', '#3b82f6', '#22c55e'
+];
+
 // State
 let portfolioData = null;
 let historyData = null;
@@ -65,6 +72,37 @@ function formatPercent(value) {
 }
 
 /**
+ * Initialize tab navigation
+ */
+function initTabs() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTab = btn.dataset.tab;
+
+            // Update button states
+            tabBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Update panel visibility
+            tabPanels.forEach(panel => {
+                panel.classList.remove('active');
+                if (panel.id === `${targetTab}-tab`) {
+                    panel.classList.add('active');
+                }
+            });
+
+            // Render pie chart when portfolio tab is shown
+            if (targetTab === 'portfolio') {
+                renderPieChart();
+            }
+        });
+    });
+}
+
+/**
  * Update last update time display
  */
 function updateLastUpdateTime() {
@@ -89,14 +127,9 @@ function updateSummaryCards() {
         Object.keys(portfolioData.positions).length : 0;
     document.getElementById('num-positions').textContent = numPositions;
 
-    // Number of sectors
-    const sectors = new Set();
-    if (portfolioData?.positions) {
-        Object.values(portfolioData.positions).forEach(pos => {
-            if (pos.sector) sectors.add(pos.sector);
-        });
-    }
-    document.getElementById('num-sectors').textContent = sectors.size;
+    // Cash percentage
+    const cashWeight = portfolioData?.cash_weight ?? 1.0;
+    document.getElementById('cash-percent').textContent = formatPercent(cashWeight);
 
     // Qualifying stocks
     const numQualifying = signalsData?.qualifying_stocks?.length || 0;
@@ -115,7 +148,7 @@ function renderPortfolioTable() {
     if (!portfolioData?.positions || Object.keys(portfolioData.positions).length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="6">
+                <td colspan="5">
                     <div class="empty-state">
                         <div class="empty-state-icon">📭</div>
                         <div class="empty-state-text">No positions in portfolio</div>
@@ -133,7 +166,6 @@ function renderPortfolioTable() {
         <tr>
             <td><strong>${pos.symbol}</strong></td>
             <td>${pos.name || '-'}</td>
-            <td>${pos.sector || 'Unknown'}</td>
             <td>${formatCurrency(pos.entry_price)}</td>
             <td>${formatPercent(pos.weight)}</td>
             <td>${formatDate(pos.entry_date)}</td>
@@ -142,46 +174,85 @@ function renderPortfolioTable() {
 }
 
 /**
- * Render sector allocation chart
+ * Render pie chart for portfolio allocation
  */
-function renderSectorChart() {
-    const container = document.getElementById('sector-chart');
+function renderPieChart() {
+    const canvas = document.getElementById('portfolio-pie-chart');
+    const legendContainer = document.getElementById('pie-legend');
 
-    if (!portfolioData?.positions || Object.keys(portfolioData.positions).length === 0) {
-        container.innerHTML = `
+    if (!canvas || !legendContainer) return;
+
+    const ctx = canvas.getContext('2d');
+    const positions = portfolioData?.positions ? Object.values(portfolioData.positions) : [];
+    const cashWeight = portfolioData?.cash_weight ?? 1.0;
+
+    // Clear previous chart
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    legendContainer.innerHTML = '';
+
+    if (positions.length === 0 && cashWeight >= 1.0) {
+        // All cash
+        legendContainer.innerHTML = `
             <div class="empty-state">
-                <div class="empty-state-icon">📊</div>
-                <div class="empty-state-text">No sector data available</div>
+                <div class="empty-state-icon">💵</div>
+                <div class="empty-state-text">100% Cash - No positions</div>
             </div>
         `;
         return;
     }
 
-    // Calculate sector allocations
-    const sectorWeights = {};
-    Object.values(portfolioData.positions).forEach(pos => {
-        const sector = pos.sector || 'Unknown';
-        sectorWeights[sector] = (sectorWeights[sector] || 0) + (pos.weight || 0);
+    // Build data for pie chart
+    const data = [];
+    positions.forEach((pos, i) => {
+        data.push({
+            label: pos.symbol,
+            value: pos.weight || 0.07,
+            color: CHART_COLORS[i % CHART_COLORS.length]
+        });
     });
 
-    // Sort by weight
-    const sortedSectors = Object.entries(sectorWeights)
-        .sort((a, b) => b[1] - a[1]);
+    // Add cash if any
+    if (cashWeight > 0.001) {
+        data.push({
+            label: 'Cash',
+            value: cashWeight,
+            color: '#9ca3af'
+        });
+    }
 
-    const maxWeight = Math.max(...Object.values(sectorWeights), 0.2);
+    // Draw pie chart
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = Math.min(centerX, centerY) - 10;
 
-    container.innerHTML = sortedSectors.map(([sector, weight]) => {
-        const barWidth = (weight / maxWeight) * 100;
-        return `
-            <div class="sector-bar">
-                <span class="sector-name">${sector}</span>
-                <div class="sector-bar-container">
-                    <div class="sector-bar-fill" style="width: ${barWidth}%"></div>
-                </div>
-                <span class="sector-value">${formatPercent(weight)}</span>
-            </div>
-        `;
-    }).join('');
+    let startAngle = -Math.PI / 2; // Start from top
+
+    data.forEach(slice => {
+        const sliceAngle = (slice.value / 1.0) * 2 * Math.PI;
+
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
+        ctx.closePath();
+        ctx.fillStyle = slice.color;
+        ctx.fill();
+
+        // Add subtle border
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        startAngle += sliceAngle;
+    });
+
+    // Draw legend
+    legendContainer.innerHTML = data.map(item => `
+        <div class="pie-legend-item">
+            <span class="pie-legend-color" style="background-color: ${item.color}"></span>
+            <span>${item.label}</span>
+            <span class="pie-legend-value">${formatPercent(item.value)}</span>
+        </div>
+    `).join('');
 }
 
 /**
@@ -406,16 +477,21 @@ async function loadDashboard() {
     updateLastUpdateTime();
     updateSummaryCards();
     renderPortfolioTable();
-    renderSectorChart();
     renderSignalsTable();
     renderActivityFeed();
     renderHistoryTable();
+
+    // Render pie chart if portfolio tab is active
+    if (document.querySelector('#portfolio-tab.active')) {
+        renderPieChart();
+    }
 }
 
 /**
  * Initialize dashboard
  */
 document.addEventListener('DOMContentLoaded', () => {
+    initTabs();
     loadDashboard();
 
     // Refresh data every 5 minutes
