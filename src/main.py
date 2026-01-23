@@ -20,11 +20,12 @@ import shutil
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from config import DATA_DIR, DOCS_DIR
+from config import DATA_DIR, DOCS_DIR, DEFAULT_CORRELATION_THRESHOLD
 from src.data_fetcher import DataFetcher
 from src.scanner import MTFScanner
 from src.portfolio import PortfolioManager
 from src.notifier import TelegramNotifier
+from src.correlation import filter_correlated_entries
 
 # Configure logging
 logging.basicConfig(
@@ -32,6 +33,38 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+
+def load_settings(filepath: Path = DATA_DIR / "settings.json") -> Dict:
+    """
+    Load user settings from JSON file.
+
+    Args:
+        filepath: Path to settings file
+
+    Returns:
+        Settings dictionary
+    """
+    default_settings = {
+        'correlation_threshold': DEFAULT_CORRELATION_THRESHOLD
+    }
+
+    if not filepath.exists():
+        logger.info(f"Settings file not found, using defaults: {default_settings}")
+        return default_settings
+
+    try:
+        with open(filepath, 'r') as f:
+            settings = json.load(f)
+            # Merge with defaults for any missing keys
+            for key, value in default_settings.items():
+                if key not in settings:
+                    settings[key] = value
+            logger.info(f"Loaded settings: correlation_threshold={settings['correlation_threshold']}")
+            return settings
+    except Exception as e:
+        logger.error(f"Error loading settings: {e}, using defaults")
+        return default_settings
 
 
 def load_watchlist(filepath: Path = DATA_DIR / "watchlist.json") -> List[str]:
@@ -86,7 +119,7 @@ def copy_data_to_docs():
     docs_data_dir = DOCS_DIR / "data"
     docs_data_dir.mkdir(parents=True, exist_ok=True)
 
-    for filename in ["portfolio.json", "history.json", "signals.json", "watchlist.json"]:
+    for filename in ["portfolio.json", "history.json", "signals.json", "watchlist.json", "settings.json"]:
         src = DATA_DIR / filename
         dst = docs_data_dir / filename
         if src.exists():
@@ -116,6 +149,11 @@ def run_daily_update(
     scanner = MTFScanner(data_fetcher)
     portfolio_manager = PortfolioManager()
     notifier = TelegramNotifier()
+
+    # Load settings
+    settings = load_settings()
+    correlation_threshold = settings.get('correlation_threshold', DEFAULT_CORRELATION_THRESHOLD)
+    logger.info(f"Using correlation threshold: {correlation_threshold:.0%}")
 
     # Load watchlist
     if watchlist is None:
@@ -147,7 +185,30 @@ def run_daily_update(
     entry_candidates = scanner.get_entry_candidates(qualifying_stocks, current_holdings)
 
     logger.info(f"Exit candidates: {len(exit_candidates)}")
-    logger.info(f"Entry candidates: {len(entry_candidates)}")
+    logger.info(f"Entry candidates (before correlation filter): {len(entry_candidates)}")
+
+    # Apply correlation filter to entry candidates
+    # Build daily data dict for correlation calculation
+    daily_data = {}
+    for symbol in list(current_holdings) + [c['symbol'] for c in entry_candidates]:
+        data = data_fetcher.fetch_symbol_data(symbol)
+        if data and 'daily' in data:
+            daily_data[symbol] = data['daily']
+
+    # Filter out correlated entries
+    filtered_entries, rejected_entries = filter_correlated_entries(
+        new_candidates=entry_candidates,
+        existing_positions=current_holdings,
+        daily_data=daily_data,
+        threshold=correlation_threshold
+    )
+
+    logger.info(f"Entry candidates (after correlation filter): {len(filtered_entries)}")
+    if rejected_entries:
+        logger.info(f"Rejected due to correlation: {[r['symbol'] for r in rejected_entries]}")
+
+    # Use filtered entries
+    entry_candidates = filtered_entries
 
     # Process the daily update
     update_result = portfolio_manager.process_daily_update(
@@ -169,6 +230,8 @@ def run_daily_update(
         'scan_results': scan_results,
         'signal_summary': signal_summary,
         'qualifying_stocks': qualifying_stocks,
+        'rejected_correlated': rejected_entries,
+        'correlation_threshold': correlation_threshold,
         'last_update': datetime.now().isoformat()
     }
     portfolio_manager.save_signals(signals_data)

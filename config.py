@@ -17,6 +17,10 @@ VSTOP_ATR_FACTOR = 2.0
 MAX_POSITION_WEIGHT = 0.07    # 7% max per single position
 TARGET_POSITIONS = 14         # Target number of positions (14 * 7% = 98%)
 
+# Correlation settings
+CORRELATION_LOOKBACK_DAYS = 90    # Trading days for correlation calculation
+DEFAULT_CORRELATION_THRESHOLD = 0.75  # Max correlation allowed (75%)
+
 # Timeframes for multi-timeframe analysis
 TIMEFRAMES = {
     'daily': '1d',

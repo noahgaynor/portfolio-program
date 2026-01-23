@@ -56,6 +56,7 @@
         <nav class="tab-nav">
             <button class="tab-btn active" data-tab="signals">Signals</button>
             <button class="tab-btn" data-tab="portfolio">Portfolio</button>
+            <button class="tab-btn" data-tab="settings">Settings</button>
         </nav>
 
         <!-- Tab Content -->
@@ -153,6 +154,46 @@
                         </table>
                     </div>
                 </section>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings-tab" class="tab-panel">
+                <div class="settings-grid">
+                    <!-- Correlation Settings -->
+                    <section class="card settings-section">
+                        <h2>Correlation Filter</h2>
+                        <p class="settings-description">
+                            Prevent adding stocks that are too correlated with existing positions.
+                            Lower threshold = more diversification, fewer positions allowed.
+                        </p>
+                        <div class="setting-item">
+                            <label for="correlation-threshold">
+                                Maximum Correlation Threshold
+                            </label>
+                            <div class="slider-container">
+                                <input type="range" id="correlation-threshold"
+                                       min="50" max="95" value="75" step="5">
+                                <span class="slider-value" id="correlation-value">75%</span>
+                            </div>
+                            <p class="setting-hint">
+                                Stocks with correlation above this threshold will be rejected.
+                            </p>
+                        </div>
+                        <button id="save-settings" class="btn btn-primary">Save Settings</button>
+                        <span id="save-status" class="save-status"></span>
+                    </section>
+
+                    <!-- Rejected Entries -->
+                    <section class="card rejected-section">
+                        <h2>Recently Rejected (Correlation)</h2>
+                        <div id="rejected-list" class="rejected-list">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">🔗</div>
+                                <div class="empty-state-text">No rejections in last scan</div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
 

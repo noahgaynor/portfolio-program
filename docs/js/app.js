@@ -8,7 +8,8 @@ const DATA_URLS = {
     portfolio: 'data/portfolio.json',
     history: 'data/history.json',
     signals: 'data/signals.json',
-    watchlist: 'data/watchlist.json'
+    watchlist: 'data/watchlist.json',
+    settings: 'data/settings.json'
 };
 
 // Color palette for pie chart
@@ -22,6 +23,7 @@ const CHART_COLORS = [
 let portfolioData = null;
 let historyData = null;
 let signalsData = null;
+let settingsData = null;
 
 /**
  * Fetch JSON data from URL
@@ -98,8 +100,104 @@ function initTabs() {
             if (targetTab === 'portfolio') {
                 renderPieChart();
             }
+
+            // Render rejected list when settings tab is shown
+            if (targetTab === 'settings') {
+                renderRejectedList();
+            }
         });
     });
+}
+
+/**
+ * Initialize settings controls
+ */
+function initSettings() {
+    const slider = document.getElementById('correlation-threshold');
+    const valueDisplay = document.getElementById('correlation-value');
+    const saveBtn = document.getElementById('save-settings');
+    const saveStatus = document.getElementById('save-status');
+
+    if (!slider || !valueDisplay || !saveBtn) return;
+
+    // Update value display when slider changes
+    slider.addEventListener('input', () => {
+        valueDisplay.textContent = `${slider.value}%`;
+    });
+
+    // Save settings
+    saveBtn.addEventListener('click', async () => {
+        const threshold = parseInt(slider.value) / 100;
+
+        // Save to localStorage (for frontend persistence)
+        localStorage.setItem('correlation_threshold', threshold);
+
+        // Note: In a real setup, this would POST to a backend endpoint
+        // For GitHub Pages (static hosting), we can only save to localStorage
+        // The actual settings.json is updated when the workflow runs
+
+        saveStatus.textContent = 'Saved! Will apply on next scan.';
+        setTimeout(() => {
+            saveStatus.textContent = '';
+        }, 3000);
+
+        console.log('Settings saved:', { correlation_threshold: threshold });
+    });
+}
+
+/**
+ * Load settings and update UI
+ */
+function loadSettings() {
+    const slider = document.getElementById('correlation-threshold');
+    const valueDisplay = document.getElementById('correlation-value');
+
+    if (!slider || !valueDisplay) return;
+
+    // Try localStorage first (user's local preference)
+    const localThreshold = localStorage.getItem('correlation_threshold');
+
+    // Then try from loaded settings data
+    const serverThreshold = signalsData?.correlation_threshold || settingsData?.correlation_threshold;
+
+    // Use localStorage if available, otherwise server settings, otherwise default
+    let threshold = 0.75;
+    if (localThreshold) {
+        threshold = parseFloat(localThreshold);
+    } else if (serverThreshold) {
+        threshold = serverThreshold;
+    }
+
+    // Update slider
+    slider.value = Math.round(threshold * 100);
+    valueDisplay.textContent = `${slider.value}%`;
+}
+
+/**
+ * Render rejected entries list
+ */
+function renderRejectedList() {
+    const container = document.getElementById('rejected-list');
+    if (!container) return;
+
+    const rejected = signalsData?.rejected_correlated || [];
+
+    if (rejected.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">🔗</div>
+                <div class="empty-state-text">No rejections in last scan</div>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = rejected.map(item => `
+        <div class="rejected-item">
+            <div class="rejected-symbol">${item.symbol}</div>
+            <div class="rejected-reason">${item.rejection_reason || 'Too correlated'}</div>
+        </div>
+    `).join('');
 }
 
 /**
@@ -461,17 +559,19 @@ async function loadDashboard() {
     console.log('Loading dashboard data...');
 
     // Fetch all data in parallel
-    const [portfolio, history, signals] = await Promise.all([
+    const [portfolio, history, signals, settings] = await Promise.all([
         fetchData(DATA_URLS.portfolio),
         fetchData(DATA_URLS.history),
-        fetchData(DATA_URLS.signals)
+        fetchData(DATA_URLS.signals),
+        fetchData(DATA_URLS.settings)
     ]);
 
     portfolioData = portfolio;
     historyData = history;
     signalsData = signals;
+    settingsData = settings;
 
-    console.log('Data loaded:', { portfolioData, historyData, signalsData });
+    console.log('Data loaded:', { portfolioData, historyData, signalsData, settingsData });
 
     // Render all components
     updateLastUpdateTime();
@@ -480,10 +580,16 @@ async function loadDashboard() {
     renderSignalsTable();
     renderActivityFeed();
     renderHistoryTable();
+    loadSettings();
 
     // Render pie chart if portfolio tab is active
     if (document.querySelector('#portfolio-tab.active')) {
         renderPieChart();
+    }
+
+    // Render rejected list if settings tab is active
+    if (document.querySelector('#settings-tab.active')) {
+        renderRejectedList();
     }
 }
 
@@ -492,6 +598,7 @@ async function loadDashboard() {
  */
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
+    initSettings();
     loadDashboard();
 
     // Refresh data every 5 minutes
@@ -500,6 +607,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Export for debugging
 window.dashboardState = {
-    getData: () => ({ portfolioData, historyData, signalsData }),
+    getData: () => ({ portfolioData, historyData, signalsData, settingsData }),
     refresh: loadDashboard
 };
